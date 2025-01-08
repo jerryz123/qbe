@@ -1,0 +1,5 @@
+*.ssa.c
+*.ssa.s
+*.ssa.ref.s
+*.ssa.exe
+*.ssa.out
