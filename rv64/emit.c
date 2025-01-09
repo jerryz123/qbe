@@ -5,7 +5,7 @@ enum {
 	Ka = -2, /* matches all classes */
 };
 
-static struct {
+struct {
 	short op;
 	short cls;
 	char *fmt;
@@ -96,7 +96,7 @@ static struct {
 	{ NOp, 0, 0 }
 };
 
-static char *rname[] = {
+char *rname[] = {
 	[FP] = "fp",
 	[SP] = "sp",
 	[GP] = "gp",
@@ -115,7 +115,7 @@ static char *rname[] = {
 	[FT11] = "ft11",
 };
 
-static int64_t
+int64_t
 slot(Ref r, Fn *fn)
 {
 	int s;
@@ -128,7 +128,7 @@ slot(Ref r, Fn *fn)
 		return -4 * (fn->slot - s);
 }
 
-static void
+void
 emitaddr(Con *c, FILE *f)
 {
 	assert(c->sym.type == SGlo);
@@ -137,10 +137,10 @@ emitaddr(Con *c, FILE *f)
 		fprintf(f, "+%"PRIi64, c->bits.i);
 }
 
-static void
+void
 emitf(char *s, Ins *i, Fn *fn, FILE *f)
 {
-	static char clschr[] = {'w', 'l', 's', 'd'};
+	char clschr[] = {'w', 'l', 's', 'd'};
 	Ref r;
 	int k, c;
 	Con *pc;
@@ -226,7 +226,7 @@ emitf(char *s, Ins *i, Fn *fn, FILE *f)
 	}
 }
 
-static void
+void
 loadaddr(Con *c, char *rn, FILE *f)
 {
 	char off[32];
@@ -249,7 +249,7 @@ loadaddr(Con *c, char *rn, FILE *f)
 	}
 }
 
-static void
+void
 loadcon(Con *c, int r, int k, FILE *f)
 {
 	char *rn;
@@ -271,7 +271,7 @@ loadcon(Con *c, int r, int k, FILE *f)
 	}
 }
 
-static void
+void
 fixmem(Ref *pr, Fn *fn, FILE *f)
 {
 	Ref r;
@@ -297,7 +297,7 @@ fixmem(Ref *pr, Fn *fn, FILE *f)
 	}
 }
 
-static void
+void
 emitins(Ins *i, Fn *fn, FILE *f)
 {
 	int o;

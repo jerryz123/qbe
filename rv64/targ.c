@@ -24,7 +24,7 @@ int rv64_rclob[] = {
 
 #define RGLOB (BIT(FP) | BIT(SP) | BIT(GP) | BIT(TP) | BIT(RA))
 
-static int
+int
 rv64_memargs(int op)
 {
 	(void)op;

@@ -1,6 +1,6 @@
 #include "all.h"
 
-static int
+int
 memarg(Ref *r, int op, Ins *i)
 {
 	if (isload(op) || op == Ocall)
@@ -10,13 +10,13 @@ memarg(Ref *r, int op, Ins *i)
 	return 0;
 }
 
-static int
+int
 immarg(Ref *r, int op, Ins *i)
 {
 	return rv64_op[op].imm && r == &i->arg[1];
 }
 
-static void
+void
 fixarg(Ref *r, int k, Ins *i, Fn *fn)
 {
 	char buf[32];
@@ -83,7 +83,7 @@ fixarg(Ref *r, int k, Ins *i, Fn *fn)
 	*r = r1;
 }
 
-static void
+void
 negate(Ref *pr, Fn *fn)
 {
 	Ref r;
@@ -93,7 +93,7 @@ negate(Ref *pr, Fn *fn)
 	*pr = r;
 }
 
-static void
+void
 selcmp(Ins i, int k, int op, Fn *fn)
 {
 	Ins *icmp;
@@ -171,7 +171,7 @@ selcmp(Ins i, int k, int op, Fn *fn)
 	fixarg(&icmp->arg[1], k, icmp, fn);
 }
 
-static void
+void
 sel(Ins i, Fn *fn)
 {
 	Ins *i0;
@@ -195,7 +195,7 @@ sel(Ins i, Fn *fn)
 	}
 }
 
-static void
+void
 seljmp(Blk *b, Fn *fn)
 {
 	/* TODO: replace cmp+jnz with beq/bne/blt[u]/bge[u] */
