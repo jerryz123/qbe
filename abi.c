@@ -9,17 +9,17 @@
 void
 elimsb(Fn *fn)
 {
-	Blk *b;
-	Ins *i;
+  Blk *b;
+  Ins *i;
 
-	for (b=fn->start; b; b=b->link) {
-		for (i=b->ins; i<&b->ins[b->nins]; i++) {
-			if (isargbh(i->op))
-				i->op = Oarg;
-			if (isparbh(i->op))
-				i->op = Opar;
-		}
-		if (isretbh(b->jmp.type))
-			b->jmp.type = Jretw;
-	}
+  for (b=fn->start; b; b=b->link) {
+    for (i=b->ins; i<&b->ins[b->nins]; i++) {
+      if (isargbh(i->op))
+        i->op = Oarg;
+      if (isparbh(i->op))
+        i->op = Opar;
+    }
+    if (isretbh(b->jmp.type))
+      b->jmp.type = Jretw;
+  }
 }
