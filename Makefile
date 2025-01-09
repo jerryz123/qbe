@@ -9,7 +9,8 @@ COMMOBJ  = main.o util.o parse.o abi.o cfg.o mem.o ssa.o alias.o load.o \
 AMD64OBJ = amd64/targ.o amd64/sysv.o amd64/isel.o amd64/emit.o
 ARM64OBJ = arm64/targ.o arm64/abi.o arm64/isel.o arm64/emit.o
 RV64OBJ  = rv64/targ.o rv64/abi.o rv64/isel.o rv64/emit.o
-OBJ      = $(COMMOBJ) $(AMD64OBJ) $(ARM64OBJ) $(RV64OBJ)
+RVLIW64OBJ = rvliw64/targ.o rvliw64/isel.o rvliw64/emit.o
+OBJ      = $(COMMOBJ) $(AMD64OBJ) $(ARM64OBJ) $(RV64OBJ) $(RVLIW64OBJ)
 
 SRCALL   = $(OBJ:.o=.c)
 
@@ -26,6 +27,7 @@ $(OBJ): all.h ops.h
 $(AMD64OBJ): amd64/all.h
 $(ARM64OBJ): arm64/all.h
 $(RV64OBJ): rv64/all.h
+$(RVLIW64OBJ): rvliw64/all.h
 main.o: config.h
 
 config.h:
@@ -77,6 +79,9 @@ check-arm64: qbe
 check-rv64: qbe
 	TARGET=rv64 tools/test.sh all
 
+check-rvliw64: qbe
+	TARGET=rvliw64 tools/test.sh all
+
 src:
 	@echo $(SRCALL)
 
@@ -93,4 +98,4 @@ src:
 wc:
 	@wc -l $(SRCALL)
 
-.PHONY: clean clean-gen check check-arm64 check-rv64 src 80 wc install uninstall
+.PHONY: clean clean-gen check check-arm64 check-rv64 check-rvliw64 src 80 wc install uninstall
