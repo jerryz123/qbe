@@ -83,6 +83,7 @@ func(Fn *fn)
 	simpl(fn);
 	fillpreds(fn);
 	filluse(fn);
+	T.bundleize(fn);
 	T.isel(fn);
 	fillrpo(fn);
 	filllive(fn);

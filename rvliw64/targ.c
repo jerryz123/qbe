@@ -5,7 +5,7 @@
 extern int rv64_rsave[];
 
 extern int rv64_memargs(int op);
-
+extern void rv64_bundleize(Fn *fn);
 
 Target T_rvliw64 = {
 	.name = "rvliw64",
@@ -25,5 +25,6 @@ Target T_rvliw64 = {
 	.isel = rvliw64_isel,
 	.emitfn = rvliw64_emitfn,
 	.emitfin = elf_emitfin,
+	.bundleize = rv64_bundleize,
 	.asloc = ".L",
 };

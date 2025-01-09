@@ -60,6 +60,7 @@ struct Target {
 	void (*isel)(Fn *);
 	void (*emitfn)(Fn *, FILE *);
 	void (*emitfin)(FILE *);
+        void (*bundleize)(Fn *);
 	char asloc[4];
 	char assym[4];
 };

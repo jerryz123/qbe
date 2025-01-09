@@ -12,6 +12,12 @@ amd64_memargs(int op)
 	return amd64_op[op].nmem;
 }
 
+static void
+amd64_bundleize(Fn *fn)
+{
+        return;
+}
+
 #define AMD64_COMMON \
 	.gpr0 = RAX, \
 	.ngpr = NGPR, \
@@ -28,6 +34,7 @@ amd64_memargs(int op)
 	.abi1 = amd64_sysv_abi, \
 	.isel = amd64_isel, \
 	.emitfn = amd64_emitfn, \
+        .bundleize = amd64_bundleize, \
 
 Target T_amd64_sysv = {
 	.name = "amd64_sysv",

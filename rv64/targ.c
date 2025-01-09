@@ -31,6 +31,12 @@ rv64_memargs(int op)
 	return 0;
 }
 
+void
+rv64_bundleize(Fn *fn)
+{
+        return;
+}
+
 Target T_rv64 = {
 	.name = "rv64",
 	.gpr0 = T0,
@@ -49,6 +55,7 @@ Target T_rv64 = {
 	.isel = rv64_isel,
 	.emitfn = rv64_emitfn,
 	.emitfin = elf_emitfin,
+	.bundleize = rv64_bundleize,
 	.asloc = ".L",
 };
 
