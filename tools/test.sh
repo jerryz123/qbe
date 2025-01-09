@@ -1,16 +1,9 @@
 #!/bin/sh
 
+
 dir=`dirname "$0"`
 bin=$dir/../qbe
 binref=$dir/../qbe.ref
-
-tmp=/tmp/qbe.zzzz
-
-drv=$tmp.c
-asm=$tmp.s
-asmref=$tmp.ref.s
-exe=$tmp.exe
-out=$tmp.out
 
 init() {
 	case "$TARGET" in
@@ -39,28 +32,35 @@ init() {
 		bin="$bin -t arm64"
 		;;
 	rv64)
-		for p in riscv64-linux-musl riscv64-linux-gnu
-		do
-			cc="$p-gcc -no-pie -static"
-			qemu="qemu-riscv64"
-			if
-				$cc -v >/dev/null 2>&1 &&
-				$qemu -version >/dev/null 2>&1
-			then
-				if sysroot=$($cc -print-sysroot) && test -n "$sysroot"
-				then
-					qemu="$qemu -L $sysroot"
-				fi
-				break
-			fi
-			cc=
-		done
-		if test -z "$cc"
-		then
-			echo "Cannot find riscv64 compiler or qemu."
-			exit 1
-		fi
+	        cc="riscv64-unknown-elf-gcc -no-pie -static"
+		qemu="spike pk"
+		# for p in riscv64-linux-musl riscv64-linux-gnu
+		# do
+		# 	cc="$p-gcc -no-pie -static"
+		# 	qemu="qemu-riscv64"
+		# 	if
+		# 		$cc -v >/dev/null 2>&1 &&
+		# 		$qemu -version >/dev/null 2>&1
+		# 	then
+		# 		if sysroot=$($cc -print-sysroot) && test -n "$sysroot"
+		# 		then
+		# 			qemu="$qemu -L $sysroot"
+		# 		fi
+		# 		break
+		# 	fi
+		# 	cc=
+		# done
+		# if test -z "$cc"
+		# then
+		# 	echo "Cannot find riscv64 compiler or qemu."
+		# 	exit 1
+		# fi
 		bin="$bin -t rv64"
+		;;
+	rvliw64)
+	        cc="riscv64-unknown-elf-gcc -no-pie -static"
+		qemu="spike pk"
+		bin="$bin -t rvliw64"
 		;;
 	"")
 		case `uname` in
@@ -87,10 +87,6 @@ init() {
 	esac
 }
 
-cleanup() {
-	rm -f $drv $asm $exe $out
-}
-
 extract() {
 	WHAT="$1"
 	FILE="$2"
@@ -111,6 +107,12 @@ extract() {
 
 once() {
 	t="$1"
+
+	drv=$t.c
+	asm=$t.s
+	asmref=$t.ref.s
+	exe=$t.exe
+	out=$t.out
 
 	if ! test -f $t
 	then
@@ -182,8 +184,6 @@ once() {
 		return 0
 	fi
 }
-
-#trap cleanup TERM QUIT
 
 init
 
