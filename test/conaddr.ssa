@@ -1,3 +1,4 @@
+# skip rv64 rvliw64
 # test amd64 addressing modes
 
 export
